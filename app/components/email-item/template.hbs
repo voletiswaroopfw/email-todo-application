@@ -1,0 +1,11 @@
+<input
+  type="checkbox"
+  checked={{item.completed}}
+  onchange={{action "toggleCompleted"}}
+/>
+<div class="item-desc">
+  <span>{{item.sender}}</span>
+  <span>
+    {{item.subject}}
+  </span>
+</div>

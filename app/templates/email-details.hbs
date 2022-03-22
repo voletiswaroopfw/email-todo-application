@@ -1,2 +1,17 @@
-<p>Details page</p>
-{{log model}}
+<div class="details-wrapper">
+  <nav>
+    {{#link-to "index" class="align-center active"}}Home{{/link-to}}
+    {{#link-to "inbox" class="align-center active"}}Inbox{{/link-to}}
+  </nav>
+  <h1>Details page</h1>
+  <div class="details-container">
+
+    <p class="email-subject">{{model.subject}}</p>
+    <p class="email-recipent"><span>{{model.sender}}</span><br />
+      to
+      <span>{{model.recipent}}</span></p>
+    <p class="email-body">
+      {{model.body}}
+    </p>
+  </div>
+</div>

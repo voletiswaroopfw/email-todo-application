@@ -9,15 +9,13 @@ export default Ember.Component.extend({
   }),
   defaultEmailDetails: computed("emailList.@each.[]", {
     get() {
-      console.log(get(this, "emailList").filterBy("id", "1"), "filter");
       return get(this, "emailList").filterBy("id", "1");
     },
   }),
   actions: {
     getEmailDetails(id) {
-      console.log(id, "event");
       let selectedEmailDetails = get(this, "emailList").filterBy("id", id);
-      set(this, 'defaultEmailDetails', selectedEmailDetails);
+      set(this, "defaultEmailDetails", selectedEmailDetails);
     },
     toggleAll() {
       let { emailList, markAllItemsRead } = getProperties(
@@ -38,9 +36,17 @@ export default Ember.Component.extend({
       return set(this, "emailList", finalData.flat());
     },
     selectedList(selected) {
-      this.set("selectedOption", selected);
-      let selectedVal = this.get("selectedOption");
-      console.log(selectedVal);
+      let emailFullList = get(this, "emailList");
+      console.log(selected);
+      let selectedData;
+      if (selected === "read") {
+        selectedData = emailFullList.filterBy("read", true);
+      } else if (selected === "unread") {
+        selectedData = emailFullList.filterBy("read", false);
+      } else {
+        selectedData = emailList;
+      }
+      return set(this, "emailList", selectedData);
     },
   },
 });

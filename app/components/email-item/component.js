@@ -6,7 +6,6 @@ export default Ember.Component.extend({
     toggleCompleted(e) {
       let { item } = getProperties(this, "item");
       set(item, "read", e.target.checked);
-      item.save();
     },
   },
 });

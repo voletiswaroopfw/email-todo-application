@@ -1,10 +1,4 @@
 <div class="header-items">
-  <select onchange={{action "selectedList" value="target.value"}}>
-    <option>-None-</option>
-    <option value="all">All</option>
-    <option value="read">Read</option>
-    <option value="unread">Unread</option>
-  </select>
   <button onclick={{action "toggleAll"}}>
     Mark all
     {{#if toggleAllLabel}}
@@ -14,7 +8,6 @@
     {{/if}}
   </button>
   <button onclick={{action "unreadFirst"}}>Show Unread first</button>
-  <button onclick={{action "resetList"}}>Reset List</button>
 </div>
 <div class={{emailWrapperClass}}>
   <ul class="email-list">

@@ -33,10 +33,6 @@ export default Ember.Component.extend({
       set(item, "read", true);
       set(this, "defaultEmailDetails", selectedEmailDetails);
     },
-    resetList() {
-      let { emailList } = getProperties(this, "emailList");
-      return set(this, "emailList", emailList);
-    },
     toggleAll() {
       let { emailList, markAllItemsRead, toggleAllLabel } = getProperties(
         this,
@@ -56,19 +52,6 @@ export default Ember.Component.extend({
         emailList.filterBy("read", true),
       ];
       return set(this, "emailList", finalData.flat());
-    },
-    selectedList(selected) {
-      let emailFullList = get(this, "emailList");
-      let selectedData;
-      if (selected === "read") {
-        selectedData = emailFullList.filterBy("read", true);
-      } else if (selected === "unread") {
-        selectedData = emailFullList.filterBy("read", false);
-      } else {
-        selectedData = get(this, "emailList");
-      }
-      console.log(selectedData, "selectedData");
-      return set(this, "emailList", selectedData);
     },
   },
 });

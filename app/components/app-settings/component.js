@@ -1,28 +1,30 @@
 import Ember from "ember";
-const { set, computed, getProperties,setProperties } = Ember;
+const { set, getProperties, setProperties } = Ember;
 
 export default Ember.Component.extend({
-  emailDetailsPage:'',
+  detailsPage: "",
 
   init() {
     this._super(...arguments);
     let settings = JSON.parse(localStorage.getItem("settings"));
-    setProperties(this, { emailDetailsPage: settings ? settings.emailDetailsPage : true });
+    setProperties(this, {
+      detailsPage: settings ? settings.detailsPage : true,
+    });
   },
 
   actions: {
     updateSetting(setting, e) {
       set(this, setting, e.target.checked);
     },
-    
+
     saveSettings() {
-      let { emailDetailsPage } = getProperties(
-        this,
-        "emailDetailsPage", 
+      let { detailsPage } = getProperties(this, "detailsPage");
+      localStorage.setItem(
+        "settings",
+        JSON.stringify({
+          detailsPage: detailsPage,
+        })
       );
-      localStorage.setItem('settings', JSON.stringify({ 
-        emailDetailsPage: emailDetailsPage, 
-      })); 
     },
   },
 });

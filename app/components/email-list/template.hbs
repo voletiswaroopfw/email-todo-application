@@ -1,23 +1,34 @@
 <div class="header-items">
   <select onchange={{action "selectedList" value="target.value"}}>
+    <option>-None-</option>
     <option value="all">All</option>
     <option value="read">Read</option>
     <option value="unread">Unread</option>
   </select>
-  <button onclick={{action "toggleAll"}}>Toggle All</button>
+  <button onclick={{action "toggleAll"}}>
+    Mark all
+    {{#if toggleAllLabel}}
+      read
+    {{else}}
+      unread
+    {{/if}}
+  </button>
   <button onclick={{action "unreadFirst"}}>Show Unread first</button>
+  <button onclick={{action "resetList"}}>Reset List</button>
 </div>
-<div class="email-container">
+<div class={{emailWrapperClass}}>
   <ul class="email-list">
     {{#each emailList as |item|}}
-      <li class="list-item {{item.read}}" onclick={{action "getEmailDetails" item.id}}>
+      <li class="list-item {{item.read}}" onclick={{action "getEmailDetails" item}}>
         {{email-item item=item}}
       </li>
     {{/each}}
   </ul>
-  <div class="email-details">
-    {{#each defaultEmailDetails as |item|}}
-      {{email-item-details item=item}}
-    {{/each}}
-  </div>
+  {{#unless emailDetails}}
+    <div class="email-details">
+      {{#each defaultEmailDetails as |item|}}
+        {{email-item-details item=item}}
+      {{/each}}
+    </div>
+  {{/unless}}
 </div>

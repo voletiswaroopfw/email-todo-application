@@ -9,23 +9,34 @@ body {
   margin: auto;
   padding: 20px;
 }
+button {
+  background: #fff;
+  border: 1px solid #333;
+  cursor: pointer;
+  padding: 2px 5px;
+}
 nav a {
-  margin-right: 15px;
+  margin-right: 15px;    
+  text-decoration: none;
+  color: #000;
+}
+nav a:hover {
+  text-decoration: underline;
 }
 nav,
 h1 {
   margin-bottom: 30px;
 }
-.menu-container{
+.menu-container {
   height: 100vh;
   max-width: 200px;
   position: absolute;
   left: 20px;
   background: #fff;
   z-index: 2;
-  transition: all .5s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
-.menu-container a{
+.menu-container a {
   display: block;
   width: 100%;
   text-decoration: none;
@@ -46,10 +57,17 @@ h1 {
   overflow-y: auto;
   height: calc(100vh - 80px);
 }
+.email-details-disabled .email-list {
+  width: 100%;
+}
 .list-item {
   cursor: pointer;
 }
-
+.list-item a {
+  width: 100%;
+  text-decoration: none;
+  color: #000;
+}
 .list-item.true {
   background-color: rgba(242, 245, 245, 0.8);
 }
@@ -70,18 +88,21 @@ h1 {
 .header-container {
   margin: 29px auto;
 }
-.header-container a{
+.header-container a {
   margin-right: 10px;
 }
 .header-items {
   margin: 29px auto;
   max-width: 1280px;
 }
+.header-items > * {
+  margin-left: 15px;
+  padding: 2px 5px;
+}
 .hamburger-menu {
   width: 20px;
-  height: 20px;
-  position: relative; 
-  margin-right: 20px;
+  height: 15px;
+  position: relative;
   float: left;
   z-index: 3;
   cursor: pointer;
@@ -91,11 +112,9 @@ h1 {
   display: inline-block;
   position: absolute;
   width: 100%;
-  height: 3px;
+  height: 2px;
   background-color: #000;
   border-radius: 9px;
-  opacity: 1;
-  left: 0;
   transition: all 0.5s ease;
 }
 .hamburger-menu span:nth-child(2) {
@@ -104,6 +123,18 @@ h1 {
 }
 .hamburger-menu span:last-child {
   bottom: 0;
+}
+.hamburger-menu.menu-activated span:first-child {
+  transform: rotate(45deg);
+  top: 50%;
+}
+.hamburger-menu.menu-activated span:nth-child(2) {
+  width: 0;
+  opacity: 0;
+}
+.hamburger-menu.menu-activated span:last-child {
+  transform: rotate(-45deg);
+  top: 50%;
 }
 .item-desc {
   display: flex;

@@ -1,11 +1,17 @@
-<input
-  type="checkbox"
-  checked={{item.completed}}
-  onchange={{action "toggleCompleted"}}
-/>
-<div class="item-desc">
-  <span>{{item.sender}}</span>
-  <span>
-    {{item.subject}}
-  </span>
-</div>
+{{#unless emailDetailsEnabled}}
+  <div class="item-desc">
+    <span>{{item.sender}}</span>
+    <span>
+      {{item.subject}}
+    </span>
+  </div>
+{{else}}
+  {{#link-to "email-details" item.id}}
+    <div class="item-desc">
+      <span>{{item.sender}}</span>
+      <span>
+        {{item.subject}}
+      </span>
+    </div>
+  {{/link-to}}
+{{/unless}}

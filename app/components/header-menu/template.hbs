@@ -1,5 +1,5 @@
 <div class="header-container">
-  <div class="hamburger-menu" onclick={{action "toggleMenu"}}>
+  <div class={{activeMenuClass}} onclick={{action "toggleMenu"}}>
     <span></span>
     <span></span>
     <span></span>
@@ -7,6 +7,4 @@
   {{#if showMenu}}
     {{hamburger-menu}}
   {{/if}}
-  {{!-- {{#link-to "index" class="align-center active"}}Home{{/link-to}}
-  {{#link-to "settings" class="align-center active"}}Settings{{/link-to}} --}}
 </div>

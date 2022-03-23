@@ -16,11 +16,11 @@ button {
   padding: 2px 5px;
 }
 nav a {
-  margin-right: 15px;    
+  margin-right: 15px;
   text-decoration: none;
   color: #000;
 }
-nav a.active{
+nav a.active {
   color: #a10000;
   pointer-events: none;
 }
@@ -74,6 +74,9 @@ h1 {
 }
 .list-item.true {
   background-color: rgba(242, 245, 245, 0.8);
+}
+.list-item.false .item-desc {
+  font-weight: bold;
 }
 .list-item > div {
   display: flex;

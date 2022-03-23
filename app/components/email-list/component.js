@@ -9,7 +9,7 @@ const {
 } = Ember;
 
 export default Ember.Component.extend({
-  // router: service(),
+  router: service(),
   // store: service(),  
   emailWrapperClass: "",
   isRead: false,
@@ -44,7 +44,7 @@ export default Ember.Component.extend({
   actions: {
     getEmailDetails(item) {
       let selectedEmailDetails = get(this, "emailList").filterBy("id", item.id);
-      // console.log(this.get('router'));
+      console.log(this.get('router'));
       set(item, "read", true);
       set(this, "defaultEmailDetails", selectedEmailDetails);
     },

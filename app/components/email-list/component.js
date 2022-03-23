@@ -1,7 +1,16 @@
 import Ember from "ember";
-const { set, computed, getProperties, setProperties, get } = Ember;
+const {
+  set,
+  computed,
+  getProperties,
+  setProperties,
+  get,
+  inject: { service },
+} = Ember;
 
 export default Ember.Component.extend({
+  // router: service(),
+  // store: service(),  
   emailWrapperClass: "",
   isRead: false,
   emailDetails: computed({
@@ -35,6 +44,7 @@ export default Ember.Component.extend({
   actions: {
     getEmailDetails(item) {
       let selectedEmailDetails = get(this, "emailList").filterBy("id", item.id);
+      // console.log(this.get('router'));
       set(item, "read", true);
       set(this, "defaultEmailDetails", selectedEmailDetails);
     },
@@ -46,12 +56,19 @@ export default Ember.Component.extend({
       });
     },
     unreadFirst() {
-      let { emailList } = getProperties(this, "emailList");
-      let finalData = [
-        emailList.filterBy("read", false),
-        emailList.filterBy("read", true),
-      ];
-      return set(this, "emailList", finalData.flat());
+      let emailList = get(this, "emailList");
+      let read = [],
+        unread = [],
+        finalData = [];
+      emailList.forEach((item) => {
+        if (item.data.read == true) {
+          read.push(item);
+        } else {
+          unread.push(item);
+        }
+      });
+      finalData = [...unread, ...read];
+      return set(this, "emailList", finalData);
     },
   },
 });

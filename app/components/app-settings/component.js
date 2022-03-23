@@ -1,24 +1,23 @@
 import Ember from "ember";
-const { set, getProperties, setProperties } = Ember;
+const { set, computed, get } = Ember;
 
 export default Ember.Component.extend({
-  detailsPage: "",
-
-  init() {
-    this._super(...arguments);
-    let settings = JSON.parse(localStorage.getItem("settings"));
-    setProperties(this, {
-      detailsPage: settings ? settings.detailsPage : true,
-    });
-  },
-
+  detailsPage: computed({
+    get() {
+      let settings = JSON.parse(localStorage.getItem("settings"));
+      return set(
+        this,
+        "detailsPage",
+        settings ? settings.detailsPage : false
+      );
+    },
+  }),
   actions: {
     updateSetting(setting, e) {
       set(this, setting, e.target.checked);
     },
-
     saveSettings() {
-      let { detailsPage } = getProperties(this, "detailsPage");
+      let detailsPage = get(this, "detailsPage");
       localStorage.setItem(
         "settings",
         JSON.stringify({

@@ -1,14 +1,18 @@
 import Ember from "ember";
-const { set, getProperties } = Ember;
+const { setProperties, getProperties } = Ember;
 
 export default Ember.Component.extend({
   showMenu: false,
-  activeMenuClass: 'hamburger-menu',
+  activeMenuClass: "hamburger-menu",
   actions: {
     toggleMenu() {
-      let {showMenu} = getProperties(this, 'showMenu');
-      set(this, 'activeMenuClass', !showMenu ? 'hamburger-menu menu-activated' : 'hamburger-menu');
-      set(this,'showMenu', !showMenu);
+      let { showMenu } = getProperties(this, "showMenu");
+      setProperties(this, {
+        activeMenuClass: !showMenu
+          ? "hamburger-menu menu-activated"
+          : "hamburger-menu",
+        showMenu: !showMenu,
+      });
     },
   },
 });

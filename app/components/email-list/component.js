@@ -1,4 +1,5 @@
 import Ember from "ember";
+import { task } from "ember-concurrency";
 const {
   set,
   computed,
@@ -12,6 +13,7 @@ export default Ember.Component.extend({
   router: service(),
   emailWrapperClass: "",
   isRead: false,
+  emailList: [],
   emailDetails: computed({
     get() {
       let settings = JSON.parse(localStorage.getItem("settings"));
@@ -29,9 +31,9 @@ export default Ember.Component.extend({
       return get(this, "emailList").isEvery("read");
     },
   }),
-  defaultEmailDetails: computed("emailList.@each.[]", {
+  defaultEmailDetails: computed("emailList", "emailList.@each.[]", {
     get() {
-      return get(this, "emailList").filterBy("id", "1");
+      return get(this, "emailList").filterBy("id", 1);
     },
   }),
   toggleEmailsLabel: computed("isRead", {
@@ -40,16 +42,32 @@ export default Ember.Component.extend({
       return `Mark all ${isRead ? "unread" : "read"}`;
     },
   }),
+  init() {
+    this._super(...arguments);
+    let fetchData = get(this, "fetchData");
+    fetchData.perform();
+  },
+  fetchData: task(function* () {
+    fetch("//my-json-server.typicode.com/voletiswaroop/demo/emails")
+      .then((item) => item.json())
+      .then((item) => {
+        set(this, "emailList", item);
+      });
+  }).drop(),
+
   actions: {
     getEmailDetails(item) {
-      let { emailList, emailDetails, router } = getProperties(this, "emailList", "emailDetails", "router");
+      let { emailList, emailDetails } = getProperties(
+        this,
+        "emailList",
+        "emailDetails"
+      );
       set(item, "read", true);
       if (emailDetails) {
-        this.get('router').transitionTo(`/inbox/email-details/${item.id}`);
+        this.get("router").transitionTo(`/inbox/email-details/${item.id}`);
       } else {
         set(this, "defaultEmailDetails", emailList.filterBy("id", item.id));
       }
-      item.save();
     },
     toggleEmails() {
       let { emailList, isRead } = getProperties(this, "emailList", "isRead");
@@ -64,7 +82,7 @@ export default Ember.Component.extend({
         unread = [],
         finalData = [];
       emailList.forEach((item) => {
-        if (item.data.read == true) {
+        if (item.read == true) {
           read.push(item);
         } else {
           unread.push(item);

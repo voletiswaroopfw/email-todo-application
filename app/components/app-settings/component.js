@@ -5,11 +5,7 @@ export default Ember.Component.extend({
   detailsPage: computed({
     get() {
       let settings = JSON.parse(localStorage.getItem("settings"));
-      return set(
-        this,
-        "detailsPage",
-        settings ? settings.detailsPage : false
-      );
+      return set(this, "detailsPage", settings ? settings.detailsPage : false);
     },
   }),
   actions: {

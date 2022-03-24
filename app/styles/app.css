@@ -162,3 +162,11 @@ h1 {
   margin: 20px 0;
   list-style: none;
 }
+
+.loader{
+  color: red;
+  background: red;
+  width: 200px;
+  height: 20px;
+  margin: auto;
+}

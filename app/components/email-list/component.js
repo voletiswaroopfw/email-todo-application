@@ -49,6 +49,7 @@ export default Ember.Component.extend({
       } else {
         set(this, "defaultEmailDetails", emailList.filterBy("id", item.id));
       }
+      item.save();
     },
     toggleEmails() {
       let { emailList, isRead } = getProperties(this, "emailList", "isRead");

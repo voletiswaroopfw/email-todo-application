@@ -10,7 +10,6 @@ const {
 
 export default Ember.Component.extend({
   router: service(),
-  // store: service(),  
   emailWrapperClass: "",
   isRead: false,
   emailDetails: computed({
@@ -43,10 +42,13 @@ export default Ember.Component.extend({
   }),
   actions: {
     getEmailDetails(item) {
-      let selectedEmailDetails = get(this, "emailList").filterBy("id", item.id);
-      console.log(this.get('router'));
+      let { emailList, emailDetails, router } = getProperties(this, "emailList", "emailDetails", "router");
       set(item, "read", true);
-      set(this, "defaultEmailDetails", selectedEmailDetails);
+      if (emailDetails) {
+        this.get('router').transitionTo(`/inbox/email-details/${item.id}`);
+      } else {
+        set(this, "defaultEmailDetails", emailList.filterBy("id", item.id));
+      }
     },
     toggleEmails() {
       let { emailList, isRead } = getProperties(this, "emailList", "isRead");

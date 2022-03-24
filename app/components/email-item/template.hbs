@@ -1,17 +1,4 @@
-{{#unless emailDetailsEnabled}}
-  <div class="item-desc">
-    <span>{{item.sender}}</span>
-    <span>
-      {{item.subject}}
-    </span>
-  </div>
-{{else}}
-  {{#link-to "email-details" item.id}}
-    <div class="item-desc">
-      <span>{{item.sender}}</span>
-      <span>
-        {{item.subject}}
-      </span>
-    </div>
-  {{/link-to}}
-{{/unless}}
+<div class="item-desc">
+  <span>{{item.sender}}</span>
+  <span>{{item.subject}}</span>
+</div> 

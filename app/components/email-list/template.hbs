@@ -10,16 +10,14 @@
     {{else if emailList}}
       <ul class="email-list">
         {{#each emailList as |item|}}
-          <li class="list-item {{item.read}}" onclick={{action "getEmailDetails" item}}>
+          <li class="list-item {{item.read}}" onclick={{action "selectEmailDetails" item}}>
             {{email-item item=item}}
           </li>
         {{/each}}
       </ul>
-      {{#unless emailDetails.emailDetails}}
-        <div class="email-details">
-          {{#each defaultEmailDetails as |item|}}
-            {{email-item-details item=item}}
-          {{/each}}
+      {{#unless emailDetails}}
+        <div class="email-details"> 
+          {{email-item-details item=selectedEmail}}
         </div>
       {{/unless}}
     {{/if}}

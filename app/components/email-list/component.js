@@ -4,7 +4,6 @@ const {
   set,
   computed,
   getProperties,
-  setProperties,
   get,
   inject: { service },
 } = Ember;
@@ -14,16 +13,17 @@ export default Ember.Component.extend({
   emailWrapperClass: "",
   isRead: false,
   emailList: [],
-  emailDetails: computed({
-    get() {
-      let settings = JSON.parse(localStorage.getItem("settings"));
-      return setProperties(this, {
-        emailDetails: settings !== null ? settings.detailsPage : false,
-        emailWrapperClass:
-          settings && settings.detailsPage == true
-            ? "email-container email-details-disabled"
-            : "email-container",
-      });
+  settings: JSON.parse(localStorage.getItem("settings")),
+  emailDetails: computed('settings', {
+    get() { 
+      return get(this, 'settings') !== null ? settings.detailsPage : false;
+    },
+  }),
+  emailWrapperClass: computed('settings', {
+    get() { 
+      return get(this, 'settings') && get(this, 'settings').detailsPage == true
+        ? "email-container email-details-disabled"
+        : "email-container";
     },
   }),
   markAllItemsRead: computed("emailList.@each.read", {
@@ -31,9 +31,9 @@ export default Ember.Component.extend({
       return get(this, "emailList").isEvery("read");
     },
   }),
-  defaultEmailDetails: computed("emailList", "emailList.@each.[]", {
+  selectedEmail: computed("emailList", "emailList.@each.[]", {
     get() {
-      return get(this, "emailList").filterBy("id", 1);
+      return get(this, "emailList").findBy("id", 1);
     },
   }),
   toggleEmailsLabel: computed("isRead", {
@@ -56,7 +56,7 @@ export default Ember.Component.extend({
   }).drop(),
 
   actions: {
-    getEmailDetails(item) {
+    selectEmailDetails(item) {
       let { emailList, emailDetails } = getProperties(
         this,
         "emailList",
@@ -66,7 +66,7 @@ export default Ember.Component.extend({
       if (emailDetails) {
         this.get("router").transitionTo(`/inbox/email-details/${item.id}`);
       } else {
-        set(this, "defaultEmailDetails", emailList.filterBy("id", item.id));
+        set(this, "selectedEmail", emailList.findBy("id", item.id));
       }
     },
     toggleEmails() {

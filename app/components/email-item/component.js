@@ -5,11 +5,7 @@ export default Ember.Component.extend({
   emailDetailsEnabled: computed({
     get() {
       let settings = JSON.parse(localStorage.getItem("settings"));
-      return set(
-        this,
-        "emailDetailsEnabled",
-        settings ? settings.detailsPage : false
-      );
+      return settings ? settings.detailsPage : false
     },
   }),
 });

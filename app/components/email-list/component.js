@@ -13,15 +13,16 @@ export default Ember.Component.extend({
   emailWrapperClass: "",
   isRead: false,
   emailList: [],
-  settings: JSON.parse(localStorage.getItem("settings")),
-  emailDetails: computed('settings', {
-    get() { 
-      return get(this, 'settings') !== null ? settings.detailsPage : false;
+  emailDetails: computed({
+    get() {
+      let settings = JSON.parse(localStorage.getItem("settings"));
+      return settings !== null ? settings.detailsPage : false;
     },
   }),
-  emailWrapperClass: computed('settings', {
-    get() { 
-      return get(this, 'settings') && get(this, 'settings').detailsPage == true
+  emailWrapperClass: computed({
+    get() {
+      let settings = JSON.parse(localStorage.getItem("settings"));
+      return settings && settings.detailsPage == true
         ? "email-container email-details-disabled"
         : "email-container";
     },

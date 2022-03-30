@@ -1,0 +1,24 @@
+<div class="header-items">
+  <button onclick={{action "toggleEmails"}}>
+   {{toggleEmailsLabel}}
+  </button>
+  <button onclick={{action "unreadFirst"}}>Show Unread first</button>
+</div>
+<div class={{emailWrapperClass}}>
+    {{#if fetchData.isRunning}}
+      <div class="loader">Loading.......</div>
+    {{else if emailList}}
+      <ul class="email-list">
+        {{#each emailList as |item|}}
+          <li class="list-item {{item.read}}" onclick={{action "selectEmailDetails" item}}>
+            {{email-item item=item}}
+          </li>
+        {{/each}}
+      </ul>
+      {{#unless emailDetails}}
+        <div class="email-details"> 
+          {{email-item-details item=selectedEmail}}
+        </div>
+      {{/unless}}
+    {{/if}}
+</div>
